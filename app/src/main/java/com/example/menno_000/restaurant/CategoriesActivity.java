@@ -1,9 +1,12 @@
 package com.example.menno_000.restaurant;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -22,6 +25,8 @@ import java.util.ArrayList;
 
 public class CategoriesActivity extends AppCompatActivity implements CategoriesRequest.Callback {
 
+    ListView listview;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +34,23 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesR
 
         CategoriesRequest request = new CategoriesRequest(this);
         request.getCategories(this);
+
+        listview = findViewById(R.id.categories_list);
+        listview.setOnItemClickListener(new CategoryClickListener());
+    }
+
+    // Implementing a listener
+    private class CategoryClickListener implements AdapterView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            String clickedCategory = (String) adapterView.getItemAtPosition(i);
+
+            // Giving the profile info to the next page
+            Intent intent = new Intent(CategoriesActivity.this, MenuActivity.class);
+            intent.putExtra("clicked_category", clickedCategory);
+            startActivity(intent);
+        }
     }
 
     @Override

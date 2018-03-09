@@ -46,13 +46,11 @@ public class CategoriesRequest extends AppCompatActivity implements Response.Lis
     @Override
     public void onResponse(JSONObject response) {
         try {
-            JSONArray res = response.getJSONArray("categories");
+            JSONArray answer = response.getJSONArray("categories");
             ArrayList<String> categories = new ArrayList<>();
 
-            Log.d("error message", categories.toString());
-
-            for (int i = 0; i<res.length(); i++) {
-                String gory = res.getString(i);
+            for (int i = 0; i<answer.length(); i++) {
+                String gory = answer.getString(i);
                 categories.add(gory);
             }
 

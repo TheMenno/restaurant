@@ -9,11 +9,11 @@ public class MenuItem {
     private String name;
     private String description;
     private String imageUrl;
-    private Float price;
+    private Integer price;
     private String category;
 
 
-    public MenuItem(String aName, String aDescription, String aImageUrl, Float aPrice, String aCategory) {
+    public MenuItem(String aName, String aDescription, String aImageUrl, Integer aPrice, String aCategory) {
         name = aName;
         description = aDescription;
         imageUrl = aImageUrl;
@@ -33,13 +33,11 @@ public class MenuItem {
         return imageUrl;
     }
 
-    public Float getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public String getCategory() {
-        return category;
-    }
+    public String getCategory() { return category; }
 
     public void setName(String name) {
         this.name = name;
@@ -53,7 +51,7 @@ public class MenuItem {
         this.imageUrl = imageUrl;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
