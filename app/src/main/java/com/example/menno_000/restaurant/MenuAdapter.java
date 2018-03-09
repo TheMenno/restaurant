@@ -15,41 +15,39 @@ import java.util.ArrayList;
  * Created by menno_000 on 9-3-2018.
  */
 
+// Initialise the MenuAdapter Class, this would not work for some reason
 public class MenuAdapter extends ArrayAdapter<MenuItem> {
 
+    // Initialse global variables
     private Context context;
     public ArrayList menuItems;
-    private int resource;
+    ImageView image;
 
+    // Initialise the adapter
     public MenuAdapter(Context context, ArrayList<MenuItem> menuItems) {
         super(context, 0, menuItems);
         this.context = context;
-        this.resource = resource;
         this.menuItems = menuItems;
     }
 
-    public TextView title;
-    public TextView price;
-    ImageView image;
-
     @Override
-    public View getView(int i, View v, @NonNull ViewGroup p) {
-        // Get the data from this position
-        MenuItem item = getItem(i);
-        // Inflate view
-        if (v == null) {
-            v = LayoutInflater.from(getContext()).inflate(R.layout.activity_menu_item, p, false);
+    public View getView(int number, View view, @NonNull ViewGroup pop) {
+        // Find out which item was clicked
+        MenuItem item = getItem(number);
+
+        // Get information about the clicked item
+        if (view == null) {
+            view = LayoutInflater.from(getContext()).inflate(R.layout.activity_menu_item, pop, false);
         }
-        // Find Views
-        title = v.findViewById(R.id.name);
-        price = v.findViewById(R.id.price);
-        image = v.findViewById(R.id.image);
-        // Populate
-        assert item != null;
+
+        // Set the text in the corresponding Menu layout file
+        image = view.findViewById(R.id.image);
+        TextView title = view.findViewById(R.id.name);
+        TextView price = view.findViewById(R.id.price);
+
         title.setText(item.getName());
         price.setText(item.getPrice().toString());
-        //loadImageFromUrl(item.getImageUrl());
 
-        return v;
+        return view;
     }
 }

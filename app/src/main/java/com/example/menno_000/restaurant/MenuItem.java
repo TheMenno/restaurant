@@ -4,6 +4,7 @@ package com.example.menno_000.restaurant;
  * Created by menno_000 on 9-3-2018.
  */
 
+// This Class is used to create customized list items for the various dishes
 public class MenuItem {
 
     private String name;
@@ -12,7 +13,7 @@ public class MenuItem {
     private Integer price;
     private String category;
 
-
+    // Constructor for the variables
     public MenuItem(String aName, String aDescription, String aImageUrl, Integer aPrice, String aCategory) {
         name = aName;
         description = aDescription;
@@ -21,6 +22,7 @@ public class MenuItem {
         category = aCategory;
     }
 
+    // Getter functions
     public String getName() {
         return name;
     }
@@ -39,6 +41,7 @@ public class MenuItem {
 
     public String getCategory() { return category; }
 
+    // Setter functions
     public void setName(String name) {
         this.name = name;
     }

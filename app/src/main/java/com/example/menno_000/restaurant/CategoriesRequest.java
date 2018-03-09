@@ -23,48 +23,51 @@ import java.util.ArrayList;
 
 public class CategoriesRequest extends AppCompatActivity implements Response.Listener<JSONObject>, Response.ErrorListener {
 
+    // Initialise an interface which can be interacted with later on
     public interface Callback {
         void gotCategories(ArrayList<String> categories);
         void gotCategoriesError(String message);
     }
 
+    // Initialising certain global variables
     public Callback callback;
     public Context context;
     public CategoriesRequest(Context aContext) {
         this.context = aContext;
     }
 
+    // Retrieve the categories from the source URL
     public void getCategories(Callback Activity) {
+        callback = Activity;
         RequestQueue queue = Volley.newRequestQueue((Context) Activity);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("https://resto.mprog.nl/categories", null, this, this);
         queue.add(jsonObjectRequest);
-
-        callback = Activity;
     }
 
     @Override
+    // Do something when it succeeds
     public void onResponse(JSONObject response) {
         try {
+            // Create an ArrayList
             JSONArray answer = response.getJSONArray("categories");
             ArrayList<String> categories = new ArrayList<>();
 
+            // Put the categories in the ArrayList
             for (int i = 0; i<answer.length(); i++) {
                 String gory = answer.getString(i);
                 categories.add(gory);
             }
 
-            if(categories.isEmpty()) {
-                callback.gotCategoriesError("There are no categories");
-            } else {
-                callback.gotCategories(categories);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+            // Check if it worked, then give the list to CategoriesActivity
+            if(categories.isEmpty()) {callback.gotCategoriesError("Could not find the categories");}
+            else {callback.gotCategories(categories);}
         }
+        catch (JSONException e) {e.printStackTrace();}
     }
 
     @Override
+    // Error message
     public void onErrorResponse(VolleyError error) {
         callback.gotCategoriesError("Something went wrong");
     }

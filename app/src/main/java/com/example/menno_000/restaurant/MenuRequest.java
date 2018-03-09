@@ -22,38 +22,42 @@ import java.util.ArrayList;
 
 public class MenuRequest extends AppCompatActivity implements Response.Listener<JSONObject>, Response.ErrorListener {
 
+    // Initialise global variables
+    public Context context;
+    public MenuRequest(Context aContext) {
+        this.context = aContext;
+    }
+
+    // Initialse Callback
     public Callback callback;
     public interface Callback {
         void gotMenu(ArrayList<MenuItem> categories);
         void gotMenuError(String message);
     }
 
-    public Context context;
-    public MenuRequest(Context aContext) {
-        this.context = aContext;
-    }
-
+    // Retrieve the menu items from the URL
     public void getMenu(Callback activity) {
+        callback = activity;
         RequestQueue queue = Volley.newRequestQueue((Context) activity);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("https://resto.mprog.nl/menu", null, this, this);
         queue.add(jsonObjectRequest);
-
-        callback = activity;
     }
 
     @Override
+    // Do something when it succeeds
     public void onResponse(JSONObject response) {
         try {
+            // Retrieve the items from the JSONArray
             JSONArray answer = response.getJSONArray("menu");
             String menu = MenuActivity.retrievedCategory;
             ArrayList<MenuItem> menuList = new ArrayList<>();
 
-            Log.d("error message", menuList.toString());
-
+            // Iterate through the items in the array
             for (int i = 0; i<answer.length(); i++) {
                 JSONObject dish = answer.getJSONObject(i);
 
+                // If the item is the same as the clicked item, save it
                 if (dish.getString("category").equals(menu)) {
                     String name = dish.getString("name");
                     String description = dish.getString("description");
@@ -65,18 +69,15 @@ public class MenuRequest extends AppCompatActivity implements Response.Listener<
                     menuList.add(menuItem);
                 }
             }
-
-            if(menuList.isEmpty()) {
-                callback.gotMenuError("There is no menu");
-            } else {
-                callback.gotMenu(menuList);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+            // Check if it worked, else give the items to MenuActivity
+            if(menuList.isEmpty()) {callback.gotMenuError("There is no menu");}
+            else {callback.gotMenu(menuList);}
         }
+        catch (JSONException e) {e.printStackTrace();}
     }
 
     @Override
+    // Error check
     public void onErrorResponse(VolleyError error) {
         callback.gotMenuError("Something went wrong");
     }

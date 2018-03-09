@@ -39,14 +39,14 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesR
         listview.setOnItemClickListener(new CategoryClickListener());
     }
 
-    // Implementing a listener
+    // Implementing a listener to know when a/which list item is clicked
     private class CategoryClickListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+            // Get the clicked item
             String clickedCategory = (String) adapterView.getItemAtPosition(i);
 
-            // Giving the profile info to the next page
+            // Forwarding the clicked item to the next page
             Intent intent = new Intent(CategoriesActivity.this, MenuActivity.class);
             intent.putExtra("clicked_category", clickedCategory);
             startActivity(intent);
@@ -55,17 +55,16 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesR
 
     @Override
     public void gotCategories(ArrayList<String> categories) {
-        // Create a new ArrayAdapter
-        ArrayAdapter<String> categoriesAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1,categories);
+        // Initialise an arrayadapter which will fill the list with available items
+        ArrayAdapter<String> categoriesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, categories);
 
+        // Add the items to the list
         ListView list_categories = findViewById(R.id.categories_list);
         list_categories.setAdapter(categoriesAdapter);
     }
 
     @Override
     public void gotCategoriesError(String message) {
-        // Show a Toast with an error message
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Log.d("error message", "Something went wrong in CategoriesActivity.java!");
     }
 }
