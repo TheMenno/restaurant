@@ -1,5 +1,6 @@
 package com.example.menno_000.restaurant;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
  * Created by menno_000 on 9-3-2018.
  */
 
-public class MenuActivity extends AppCompatActivity {
+public class MenuActivity extends AppCompatActivity implements MenuRequest.Callback {
 
     static String retrievedCategory;
 
@@ -39,7 +40,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     @Override
-    public void gotMenuItemsError(String message) {
-        // Display error message
+    public void gotMenuError(String message) {
+
     }
 }

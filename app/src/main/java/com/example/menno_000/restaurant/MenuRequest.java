@@ -33,13 +33,13 @@ public class MenuRequest extends AppCompatActivity implements Response.Listener<
         this.context = aContext;
     }
 
-    public void getMenu(Callback Activity) {
-        RequestQueue queue = Volley.newRequestQueue((Context) Activity);
+    public void getMenu(Callback activity) {
+        RequestQueue queue = Volley.newRequestQueue((Context) activity);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("https://resto.mprog.nl/menu", null, this, this);
         queue.add(jsonObjectRequest);
 
-        callback = Activity;
+        callback = activity;
     }
 
     @Override
